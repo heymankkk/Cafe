@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<select id="login" resultType="kr.pe.TK.domain.MemberVO">
+		select * from member where userid = #{userid}
+	</select>
+	
+	<insert id="create">
+		insert into board(title,content,writer) 
+		values(#{title},#{content},#{writer})
+	</insert>
+		
+	<select id="read" resultType="kr.pe.TK.domain.BoardVO">
+		select * from board where bno = #{bno}
+	</select>
+		
+	<update id="update" parameterType="hashmap">
+		update board set title = #{title}, content = #{content} 
+		where bno = #{bno}
+	</update>
+		
+	<delete id="delete" parameterType="hashmap">
+		delete from board where bno = #{bno}
+	</delete>
+		
+	<select id="listAll" resultType="kr.pe.TK.domain.BoardVO">
+		select * from board
+		where bno &gt; 0
+		order by bno desc, regdate desc
+	</select>
+	
+	<select id="listPage" resultType="kr.pe.TK.domain.BoardVO">
+		select * from board
+		where bno &gt; 0
+		order by bno desc
+		limit #{page},10
+	</select>
+	
+	<select id="listCriteria" resultType="kr.pe.TK.domain.BoardVO">
+		select * from board
+		where bno &gt; 0
+		order by bno desc
+		limit #{pageStart},#{perPageNum}
+	</select>
+	
+	<select id="countPaging" resultType="int">
+		select count(bno) from board
+		where bno &gt; 0
+	</select>
+	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and title like concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				and content like concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				and writer like concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				and title like concat('%', #{keyword}, '%')
+				 or content like concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				and content like concat('%', #{keyword}, '%')
+			     or writer like concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				and title like concat('%', #{keyword}, '%')
+				 or content like concat('%', #{keyword}, '%')
+				 or writer like concat('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+	
+	<select id="listSearch" resultType="kr.pe.TK.domain.BoardVO">
+		select * from board
+		where bno &gt; 0 and cafeurl = #{cafeurl} and category2 = #{category2}
+		<include refid="search"></include>
+		order by bno desc
+		limit #{pageStart},#{perPageNum}
+	</select>
+	<select id="listSearchAll" resultType="kr.pe.TK.domain.BoardVO">
+		select * from board
+		where bno &gt; 0 and cafeurl = #{cafeurl}
+		<include refid="search"></include>
+		order by bno desc
+		limit #{pageStart},#{perPageNum}
+	</select>
+		
+	<select id="listSearchCount" resultType="int">
+		select count(bno) from board
+		where bno &gt; 0 and cafeurl = #{cafeurl} and category2 = #{category2}
+		<include refid="search"></include>
+	</select>
+	<select id="listSearchCountAll" resultType="int">
+		select count(bno) from board
+		where bno &gt; 0 and cafeurl = #{cafeurl}
+		<include refid="search"></include>
+	</select>
+	
+	
+	<select id="getcafe" resultType="kr.pe.TK.domain.CafeVO">
+		select * from cafe
+		where cafeurl = #{cafeurl}
+	</select>
+	<sql id="write">
+		<if test="using != null">
+			and category1 = #{using}
+		</if>
+	</sql>
+	<select id="getboardlist" resultType="kr.pe.TK.domain.BoardlistVO">
+		select * from boardlist
+		where cafeurl = #{cafeurl}
+		<include refid="write"></include>
+		order by cate1,cate2
+	</select>
+	
+	<select id="getisid" resultType="String">
+		select userid from member
+		where userid = #{userid}
+	</select>
+	<insert id="newid">
+		insert into member(userid,userpw,usernick,username,userphone,email)
+		values(#{userid},#{userpw},#{usernick},#{username},#{userphone},#{email})
+	</insert>
+	
+	<sql id="cafesearch">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				where cafeintro like concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				where cafename like concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				where userid like concat('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+	<select id="getbtllist" resultType="kr.pe.TK.domain.CafeVO">
+		select * from cafe
+		<include refid="cafesearch"></include>
+		order by cafepopulation desc
+		limit #{pageStart},#{perPageNum}
+	</select>
+	<select id="getbtllistcount" resultType="int">
+		select count(cafeurl) from cafe
+		<include refid="cafesearch"></include>
+	</select>
+		
+		
+	
+</mapper>

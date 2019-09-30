@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  mybatis-config.xml 은 필수가 아닌 선택. -->
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configutation>
+	<!-- 마이바티스 작동 규칙정의 - 마이바티스 캐시 사용 안함 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+	</settings>
+	
+	<!-- <typeAliases>
+		<package name="kr.pe.TK.domain"/>
+	</typeAliases> Mapper.xml에서 type에 기본경로로 지정. -->
+</configutation>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafe">
+
+	<insert id="makecafe" parameterType="hashmap">
+		insert into cafe(userid,cafename,cafeurl,cafeinfoimg,cafeheadimg,cafeintro)
+		values(#{userid},#{cafename},#{cafeurl},#{cafeinfoimg},#{cafeheadimg},#{cafeintro})
+	</insert>
+	<update id="upiscafe" parameterType="hashmap">
+		update member set iscafe = 1 
+		where userid = #{userid}
+	</update>
+	<insert id="basicboard" parameterType="hashmap">
+		insert into boardlist
+		values(#{cafeurl},#{category1},#{category2},#{cate1},#{cate2})
+	</insert>
+	
+	<select id="iscafe" resultType="int">
+		select iscafe from member
+		where userid = #{userid}
+	</select>
+	
+	<select id="cafeinfo" resultType="kr.pe.TK.domain.CafeVO">
+		select * from cafe
+		where userid = #{userid}
+	</select>
+	
+	<update id="view">
+		update board set viewcut = viewcut + 1 where bno = #{bno}
+	</update>
+	<select id="read" resultType="kr.pe.TK.domain.BoardVO">
+		select * from board where bno = #{bno}
+	</select>
+	<select id="replylist" resultType="kr.pe.TK.domain.ReplyVO">
+		select * from reply where bno = #{bno}
+		order by rno desc
+		limit #{pageStart},${perPageNum}
+	</select>
+	<select id="getmaxrno" resultType="String">
+		select max(rno) from reply
+	</select>
+	<insert id="setreply">
+		insert into reply(rno,bno,replytext,replyer)
+		values(#{rno},#{bno},#{replytext},#{replyer})
+	</insert>
+	<select id="getmaxnum" resultType="int">
+		select max(num) from reply
+		where rno = #{rno} and bno = #{bno}
+	</select>
+	<insert id="setre_reply">
+		insert into reply(rno,bno,replytext,replyer,num)
+		values(#{rno},#{bno},#{replytext},#{replyer},#{num})
+	</insert>
+	<delete id="delreply">
+		delete from reply 
+		where rno = #{rno} and bno = #{bno} and num = #{num}
+	</delete>
+	<select id="getreplylistcount" resultType="int">
+		select count(replytext) from reply
+		where bno = #{bno}
+	</select>
+	
+	<insert id="create">
+		insert into board(title,content,writer,cafeurl,category1,category2,pw) 
+		values(#{title},#{content},#{writer},#{cafeurl},#{category1},#{category2},#{pw})
+	</insert>
+	
+	<delete id="delete" parameterType="hashmap">
+		delete from board where bno = #{bno}
+	</delete>
+	
+	<select id="chkboardpw" resultType="String">
+		select pw from board where bno = #{bno}
+	</select>
+	
+	<update id="update" parameterType="hashmap">
+		update board set title = #{title}, content = #{content} 
+		where bno = #{bno}
+	</update>
+	
+	<select id="chkcafeurl" resultType="Integer">
+		select count(cafeurl) from cafe
+		where cafeurl = #{cafeurl}
+	</select>
+	
+	
+	
+	<!-- 관리자기능 시작-->
+	<select id="addboardcate2_count" resultType="int">
+		select count(category1) from boardlist
+		where cafeurl = #{cafeurl} and category1 = #{category1}
+	</select>
+	<select id="addboardcate2_cate1" resultType="int">
+		select cate1 from boardlist
+		where cafeurl = #{cafeurl} and category1 = #{category1}
+		group by cate1
+	</select>
+	<insert id="addboardcate2">
+		insert into boardlist
+		values(#{cafeurl},#{category1},#{name},#{cate1},#{cate2})
+	</insert>
+	
+	
+	
+	<select id="addboardcate1_count" resultType="int">
+		select max(cate1) from boardlist
+		where cafeurl = #{cafeurl}
+	</select>
+	<insert id="addboardcate1">
+		insert into boardlist
+		values(#{cafeurl},#{name},"기본게시판${basic}",#{cate1},1)
+	</insert>
+	
+
+
+
+	<select id="prikeycate" resultType="kr.pe.TK.domain.BoardlistVO">
+		select ${kind} from boardlist
+		where cafeurl = #{cafeurl}
+		group by ${kind}
+	</select>
+	
+	<update id="adjcate">
+		update boardlist
+		set ${kindcate} = #{name}
+		where cafeurl = #{cafeurl} and ${kindcate} = #{category}
+	</update>
+	<update id="adjcateboard">
+		update board
+		set ${kindcate} = #{name}
+		where cafeurl = #{cafeurl} and ${kindcate} = #{category}
+	</update>
+
+	<!-- 관리자기능 / 게시판삭제 -->
+	<sql id="abc">
+		<if test="kind == 'category2'.toString()">
+			and cate1 = #{cate1inthis}
+		</if>
+	</sql>
+	<sql id="def">
+		<if test="kind == 'category2'.toString()">
+			and cate1 = #{cate1inthis}
+		</if>
+	</sql>
+	<select id="lineupcount" resultType="int">
+		select ${kindcate} from boardlist
+		where cafeurl = #{cafeurl} and ${kind} = #{category}
+		group by ${kindcate}
+	</select>
+	<update id="lineup">
+		update boardlist
+		set ${kindcate} = #{cate2inthis}
+		where cafeurl = #{cafeurl}
+		<include refid="abc"></include>
+		and ${kindcate} = ${cate2inthis}+1;
+	</update>
+	<select id="lineupend" resultType="int">
+		select max(${kindcate}) from boardlist
+		where cafeurl = #{cafeurl}
+		<include refid="def"></include>
+	</select>
+	
+	<delete id="removeboardlist">
+		delete from boardlist
+		where cafeurl = #{cafeurl} and ${kind} = #{category};
+	</delete>
+	<delete id="removeboard">
+		delete from board
+		where cafeurl = #{cafeurl} and ${kind} = #{category};
+	</delete>
+	<!-- <update id="removeboardNO">
+		update boardlist set category2=""
+		where cafeurl = #{cafeurl} and cate1 = #{cate1inthis}
+	</update> -->
+	
+	<sql id="pst">
+		<if test="kind == 'category2'.toString()">
+			and cate1 = ${cate1inthis}
+		</if>
+		<!-- <if test="kind == 'category1'.toString()">
+			and ${kind} = #{category}
+		</if> -->
+	</sql>
+	<update id="positionup">
+		update boardlist
+		set ${kindcate} = ${data2}
+		where cafeurl = #{cafeurl}
+		<include refid="pst"></include>
+		and ${kindcate} = ${data1}
+	</update>
+	
+	<!-- 관리자기능 끝-->
+</mapper>

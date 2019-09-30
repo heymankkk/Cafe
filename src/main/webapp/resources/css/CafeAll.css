@@ -1,0 +1,368 @@
+@charset "UTF-8";
+body{
+	margin:0 auto;
+}
+a:link{
+	text-decoration:none;
+	color:black;		
+}
+a:visited{
+	text-decoration:none;
+	color:black;
+}
+a:hover{
+	text-decoration:underline;
+	color:black;	
+}
+#main{
+	width:1080px;
+	margin:0 auto;
+}
+#header{
+	width:1080px;
+	height:70px;
+	background:url('/TK/resources/img/TESTbackgroundLeft.jpg');
+	line-height:68px;
+}
+#textcafe{
+	display:inline-block;
+	color:white;
+	font-size:26px;
+	width:100px;
+	height:70px;
+	text-align:center;
+	margin-left:40px;
+	margin-right:20px;
+}
+#search{
+	display:inline-block;
+	position:absolute;
+}
+#search>select{
+	display:inline-block;
+	width:81px;
+	height:29px;
+}
+#keywordInput{
+	display:inline-block;
+	width:200px;
+	height:25px;
+}
+#searchBtn{
+	display:inline-block;
+	width:38px;
+	height:34px;
+	background-color:black;
+	color:white;
+	font-size:11px;
+	padding:0px;
+	border:0px;
+}
+#searchBtn:hover{
+	background:#212121;
+	cursor:pointer;
+}
+#login{
+	float:right;
+	color:lightgray;
+	font-size:13px;
+	width:70px;
+	height:25px;
+	text-align:center;
+	margin-right:20px;
+	border:1px solid black;
+	margin-top:22px;
+	line-height:2;
+	background:black;
+}
+
+#newid{
+	float:right;
+	color:lightgray;
+	font-size:13px;
+	width:82px;
+	height:25px;
+	text-align:center;
+	margin-right:40px;
+	border:1px solid black;
+	margin-top:22px;
+	line-height:2;
+	background:black;
+}
+#newid:hover{
+	cursor:pointer;
+	background:#212121;
+}
+#login:hover{
+	background:#212121;
+	cursor:pointer;
+}
+#loginform{
+	float:right;
+	line-height:2;
+	font-size:13px;
+	color:white;
+	display:none;
+	z-index:2;
+	padding:9px;
+}
+#loginform span{
+	width:40px;
+	height:21px;
+	text-align:center;
+	display:inline-block;
+}
+#form1{
+	float:left;
+}
+#form2{
+	float:right;
+}
+#checkidpw{
+	color:lightgray;
+	font-size:13px;
+	width:70px;
+	height:27px;
+	text-align:center;
+	border:1px solid black;
+	line-height:2;
+	background:black;
+	margin:13px 12px 15px 15px;
+}
+#checkidpw:hover{
+	background:#212121;
+}
+#logout{
+	float:right;
+	color:lightgray;
+	font-size:13px;
+	width:70px;
+	height:25px;
+	text-align:center;
+	margin-right:40px;
+	border:1px solid black;
+	margin-top:22px;
+	line-height:2;
+	background:black;
+	display:none;
+}
+#logout:hover{
+	background:#212121;
+	cursor:pointer;
+}
+#iscafe0>div:nth-child(1):hover{
+	background:#212121;
+	cursor:pointer;
+}
+
+
+
+#introslide{
+	width:1080px;
+	height:265px;
+}
+#introimg{
+	width:100%;
+	height:100%;
+}
+
+
+
+#btl{
+	float:left;
+	width:823px;
+	height:505px;
+	padding:15px;
+}
+#btlbox{
+	display:inline-block;
+	width:823px;
+	height:470px;
+}
+#eachcafe{
+	width:380px;
+	height:90px;
+	display:inline-block;
+	padding:5px;
+	margin:5px;
+}
+#eachcafe>div{
+	display:inline-block;
+}
+#eachcafe:hover{
+	cursor:pointer;
+}
+#eachcafe>div:nth-child(1){
+	float:left;
+	margin:5px;
+}
+#eachcafe>div:nth-child(2){
+	width:270px;
+	height:18px;
+	float:right;
+	margin:10px 0px 0px 10px;
+	font-size:14px;
+	color:#222;
+}
+#eachcafe>div:nth-child(3){
+	width:270px;
+	float:right;
+	height:17px;
+	margin:5px 0px 0px 10px;
+	font-size:13px;
+	color:#666;
+}
+#eachcafe>div:nth-child(4){
+	width:270px;
+	float:right;
+	height:17px;
+	margin:10px 0px 0px 10px;
+	font-size:13px;
+	color:darkgray;
+}
+#btlimg{
+	width:80px;
+	height:80px;
+	border-radius:31px;
+	border:2px solid lightgray;
+}
+.text-center{
+	text-align:center;
+}
+
+ul{
+	list-style:none;
+}
+.pagination{
+	padding-left:0;
+}
+.pagination>li{
+	display:inline-block;
+	line-height:28px;
+	width:30px;
+	height:30px;
+	border:1px solid #2F2F2F;
+	border-radius:15px;
+}
+.pagination a{
+	font-size:13px;
+}
+.active{
+	width:32px;
+	height:32px;
+	background-color:#2F2F2F;
+}
+.active>a{
+	color:white;
+}
+
+
+
+
+
+#btr{
+	float:right;
+	width:227px;
+	height:535px;
+	background:url('/TK/resources/img/TESTbackgroundLeft.jpg');
+}
+#btrlogin{
+	width:227px;
+	height:500px;
+}
+#btrlogoff{
+	width:227px;
+	height:535px;
+	font-size:35px;
+	font-family:cursive;
+	text-align:center;
+	line-height:500px;
+}
+#iscafe1{
+	color:lightgray;
+}
+#iscafe1info{
+	padding:15px;
+	font-size:13px;
+}
+#makecafediv{
+	display:none;
+	margin:15px;
+	width:197px;
+	height:399px;
+}
+.text1{
+	width:197px;
+	height:38px;
+	color:lightgray;
+	font-size:14px;
+	text-align:center;
+	border:1px solid black;
+	line-height:35px;
+	background:black;
+	margin:15px;
+}
+#cafeinfro{
+	width:190px;
+	height:45px;
+	padding:3px;
+}
+#cafename{
+	padding:3px;
+	width:188px;
+}
+/* #cafeinfoimg{
+	width: 80px;
+    height: 80px;
+}
+#cafeheadimg{
+	width: 80px;
+    height: 80px;
+} */
+#chkcafeurl{
+	background:#212121;
+	color:lightgray;
+	width:56px;
+	height:22px;
+	padding:2px;
+	border:1px solid black;
+	border-radius:3px;
+	font-size:11px;
+}
+#chkcafeurl:hover{
+	background:black;	
+}
+#gotocafe:hover{
+	background:#212121;
+	cursor:pointer;
+}
+#text1:hover{
+	background:#212121;
+}
+#makecafediv div{
+	color:lightgray;
+	font-size:13px;
+	margin-bottom:2px;
+}
+#makecafediv input{
+	margin-bottom:7px;
+}
+#makecafediv>img{
+	width:0px;
+	height:0px;
+}
+#cafebutton{
+	display:inline-block;
+	float:right;
+	background:#212121;
+	color:lightgray;
+	width:58px;
+	height:30px;
+	padding:2px;
+	border:1px solid black;
+	border-radius:3px;
+	font-size:13px;
+}
+#cafebutton:hover{
+	background:black;
+}
